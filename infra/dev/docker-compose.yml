@@ -1,0 +1,33 @@
+services:
+  gateway:
+    build: '../../backend/gateway'
+    ports: [ '8080:8080' ]
+    environment: [ 'NODE_ENV=development', 'AUTH_SERVICE_URL=auth:50000' ]
+    depends_on:
+      proto:
+        condition: service_completed_successfully
+      auth:
+        condition: service_started
+    volumes: [ '../../backend/gateway:/app' ]
+    networks: ['auth']
+    command: 'npm run start:dev'
+
+  auth:
+    build: '../../backend/auth'
+    environment: ['NODE_ENV=development']
+    depends_on:
+      proto:
+        condition: service_completed_successfully
+    volumes: ['../../backend/auth:/app']
+    networks: ['auth']
+    command: 'npm run start:dev'
+
+  proto:
+    build: '../../backend/proto'
+    environment: ['NODE_ENV=development']
+    volumes: ['../../backend/proto:/app', '../../:/projects']
+    command: 'npm run generate-types'
+
+networks:
+  auth:
+    driver: bridge

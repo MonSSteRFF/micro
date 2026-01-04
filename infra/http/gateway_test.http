@@ -1,0 +1,7 @@
+# base hello world request without grpc
+GET http://localhost:8080/
+
+###
+
+# ping request with grpc
+GET http://localhost:8080/ping

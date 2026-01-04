@@ -1,0 +1,14 @@
+{
+	"name": "microservices",
+	"author": "MonSSteR",
+	"packageManager": "pnpm@10.17.1",
+	"scripts": {
+		"docker:dev": "docker-compose -f infra/dev/docker-compose.yml up --build",
+		"format": "biome format --fix",
+		"lint": "biome lint --fix",
+		"proto-gen": "cd backend/proto && pnpm run gen"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "^2.3.11"
+	}
+}

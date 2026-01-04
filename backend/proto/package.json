@@ -1,0 +1,9 @@
+{
+	"scripts": {
+		"generate-types": "bash gen.sh",
+		"gen": "docker-compose -f ../../infra/dev/docker-compose.yml up proto"
+	},
+	"dependencies": {
+		"ts-proto": "^1.159.0"
+	}
+}
