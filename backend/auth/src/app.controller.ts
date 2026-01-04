@@ -1,17 +1,15 @@
 import { Controller, Get } from "@nestjs/common";
 import { GrpcMethod } from "@nestjs/microservices";
 import { AppService } from "./app.service";
-import { AUTH_SERVICE_NAME } from "./proto/auth";
-
-interface PingRequest {
-	message: string;
-}
-interface PingResponse {
-	message: string;
-}
+import {
+	AUTH_SERVICE_NAME,
+	AuthServiceController,
+	PingRequest,
+	PingResponse,
+} from "./proto/auth";
 
 @Controller()
-export class AppController {
+export class AppController implements AuthServiceController {
 	constructor(private readonly appService: AppService) {}
 
 	@Get()
@@ -19,8 +17,8 @@ export class AppController {
 		return this.appService.getHello();
 	}
 
-	@GrpcMethod(AUTH_SERVICE_NAME, "Ping")
-	ping(data: PingRequest): PingResponse {
+	@GrpcMethod(AUTH_SERVICE_NAME, "ping")
+	ping(_request: PingRequest): PingResponse {
 		return { message: "pong" };
 	}
 }
